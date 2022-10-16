@@ -1,0 +1,22 @@
+server:
+  port: 10086
+spring:
+  application:
+    name: demo-server
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.com:8858  #nacos地址
+        service: ${spring.application.name}
+        namespace: ${spring.profiles.active}
+        metadata:
+          user:
+            name: ${spring.security.user.name}
+            password: ${spring.security.user.password}
+      config:
+        namespace: ${spring.profiles.active}
+        file-extension: yaml
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        sharedConfigs: base.yaml    #共享配置,一些基础配置放在这里,不支持动态刷新
